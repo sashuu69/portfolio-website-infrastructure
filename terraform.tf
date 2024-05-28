@@ -5,11 +5,11 @@ terraform {
       version = "<= 5.51.1"
     }
     cloudflare = {
-      source = "cloudflare/cloudflare"
+      source  = "cloudflare/cloudflare"
       version = "<= 4.33.0"
     }
     http = {
-      source = "hashicorp/http"
+      source  = "hashicorp/http"
       version = "<= 3.4.2"
     }
   }
@@ -19,12 +19,12 @@ terraform {
 provider "aws" {
   access_key = var.aws_access_key_id
   secret_key = var.aws_secret_access_key
-  region = var.region
+  region     = var.region
 }
 
 # Define cloudflare provider
 provider "cloudflare" {
-  email = var.cloudflare_mail
+  email   = var.cloudflare_mail
   api_key = var.cloudflare_api_key
 }
 
@@ -141,12 +141,12 @@ resource "aws_instance" "portfolio_website_instance" {
 locals {
   dns_records = [
     {
-      name = var.portfolio_website_domain_name
+      name  = var.portfolio_website_domain_name
       value = aws_eip_association.portfolio_website_eip_association.public_ip
-      type = "A"
-    }, 
+      type  = "A"
+    },
     {
-      name = "www.${var.portfolio_website_domain_name}"
+      name  = "www.${var.portfolio_website_domain_name}"
       value = var.portfolio_website_domain_name
       type  = "CNAME"
     }
@@ -155,7 +155,7 @@ locals {
 
 # Set Cloudflare DNS records
 resource "cloudflare_record" "portfolio_website_dns_records" {
-  for_each = {for record in local.dns_records : record.name => record }
+  for_each = { for record in local.dns_records : record.name => record }
 
   zone_id = var.cloudflare_zone_id
   name    = each.value.name
@@ -166,7 +166,7 @@ resource "cloudflare_record" "portfolio_website_dns_records" {
 }
 
 resource "local_file" "portfolio_website_inventory_file" {
-  content = <<EOF
+  content  = <<EOF
 [aws]
 ${aws_eip_association.portfolio_website_eip_association.public_ip} ansible_user=${var.instance_username} ansible_ssh_private_key_file=${local.private_key_path} ansible_ssh_common_args='-o StrictHostKeyChecking=no'
   EOF
@@ -185,7 +185,7 @@ resource "null_resource" "portfolio_website_ansible_playbook" {
     EOT
   }
 
-  depends_on = [ aws_instance.portfolio_website_instance ]
+  depends_on = [aws_instance.portfolio_website_instance]
 }
 
 data "http" "portfolio_website_status" {

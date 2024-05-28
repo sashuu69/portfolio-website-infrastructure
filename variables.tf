@@ -6,12 +6,14 @@ variable "prefix" {
 
 variable "aws_access_key_id" {
   description = "The AWS access key ID"
-  type = string
+  type        = string
+  sensitive   = true
 }
 
 variable "aws_secret_access_key" {
   description = "The AWS secret access key"
-  type = string
+  type        = string
+  sensitive   = true
 }
 
 variable "region" {
@@ -22,12 +24,14 @@ variable "region" {
 
 variable "cloudflare_mail" {
   description = "The cloudflare mail ID"
-  type = string
+  type        = string
+  sensitive   = true
 }
 
 variable "cloudflare_api_key" {
   description = "The cloudflare API key"
-  type = string
+  type        = string
+  sensitive   = true
 }
 
 variable "vpc_cidr_block" {
@@ -74,8 +78,8 @@ variable "ami" {
 
 variable "ubuntu_version_codename" {
   description = "Ubuntu version code name (eg: noble)"
-  type = string
-  default = "noble"
+  type        = string
+  default     = "noble"
 }
 
 variable "instance_type" {
@@ -86,27 +90,28 @@ variable "instance_type" {
 
 variable "github_repository" {
   description = "The GitHub repository path of portfolio website"
-  type = string
-  default = "https://github.com/sashuu69/portfolio-website-docker-compose"
+  type        = string
+  default     = "https://github.com/sashuu69/portfolio-website-docker-compose"
 }
 
 variable "ssl_certificate_path" {
   description = "The SSL certificate path for HTTPS"
-  type = string
+  type        = string
 }
 
 variable "instance_username" {
   description = "The username for the instance"
-  type = string
-  default = "ubuntu"
+  type        = string
+  default     = "ubuntu"
 }
 
 variable "cloudflare_zone_id" {
   description = "The cloudflare Zone ID"
-  type = string
+  type        = string
+  sensitive   = true
 }
 
 variable "portfolio_website_domain_name" {
   description = "The Domain name for portfolio website"
-  type = string
+  type        = string
 }
