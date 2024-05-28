@@ -4,10 +4,30 @@ variable "prefix" {
   default     = "portfolio-website"
 }
 
+variable "aws_access_key_id" {
+  description = "The AWS access key ID"
+  type = string
+}
+
+variable "aws_secret_access_key" {
+  description = "The AWS secret access key"
+  type = string
+}
+
 variable "region" {
   description = "The AWS region to deploy resources in"
   type        = string
   default     = "ap-south-1"
+}
+
+variable "cloudflare_mail" {
+  description = "The cloudflare mail ID"
+  type = string
+}
+
+variable "cloudflare_api_key" {
+  description = "The cloudflare API key"
+  type = string
 }
 
 variable "vpc_cidr_block" {
@@ -31,7 +51,7 @@ variable "route_table_cidr_block" {
 variable "public_key_path" {
   description = "Public key to add to instance for SSH"
   type        = string
-  default     = "~/Keys/AWS/flsashwat/id_rsa.pub"
+  default     = "~/.ssh/id_rsa.pub"
 }
 
 variable "ingress_ports" {
@@ -52,8 +72,41 @@ variable "ami" {
   default     = "ami-0f58b397bc5c1f2e8" # Ubuntu Server 24.04
 }
 
+variable "ubuntu_version_codename" {
+  description = "Ubuntu version code name (eg: noble)"
+  type = string
+  default = "noble"
+}
+
 variable "instance_type" {
   description = "The instance type to use for the instance"
   type        = string
   default     = "t2.micro"
+}
+
+variable "github_repository" {
+  description = "The GitHub repository path of portfolio website"
+  type = string
+  default = "github.com/sashuu69/portfolio-website-docker-compose"
+}
+
+variable "ssl_certificate_path" {
+  description = "The SSL certificate path for HTTPS"
+  type = string
+}
+
+variable "instance_username" {
+  description = "The username for the instance"
+  type = string
+  default = "ubuntu"
+}
+
+variable "cloudflare_zone_id" {
+  description = "The cloudflare Zone ID"
+  type = string
+}
+
+variable "portfolio_website_domain_name" {
+  description = "The Domain name for portfolio website"
+  type = string
 }
