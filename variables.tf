@@ -87,7 +87,7 @@ variable "instance_type" {
 variable "github_repository" {
   description = "The GitHub repository path of portfolio website"
   type = string
-  default = "github.com/sashuu69/portfolio-website-docker-compose"
+  default = "https://github.com/sashuu69/portfolio-website-docker-compose"
 }
 
 variable "ssl_certificate_path" {

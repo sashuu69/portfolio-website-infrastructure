@@ -4,13 +4,32 @@ terraform {
       source  = "hashicorp/aws"
       version = "<= 5.51.1"
     }
+    cloudflare = {
+      source = "cloudflare/cloudflare"
+      version = "<= 4.33.0"
+    }
+    http = {
+      source = "hashicorp/http"
+      version = "<= 3.4.2"
+    }
   }
 }
 
-# Define provider
+# Define aws provider
 provider "aws" {
+  access_key = var.aws_access_key_id
+  secret_key = var.aws_secret_access_key
   region = var.region
 }
+
+# Define cloudflare provider
+provider "cloudflare" {
+  email = var.cloudflare_mail
+  api_key = var.cloudflare_api_key
+}
+
+# Define http provider
+provider "http" {}
 
 # Define global variables
 locals {
@@ -18,6 +37,7 @@ locals {
     Name          = var.prefix
     Maintained_By = "Terraform"
   }
+  private_key_path = replace(var.public_key_path, ".pub", "")
 }
 
 # Create VPC
@@ -118,26 +138,56 @@ resource "aws_instance" "portfolio_website_instance" {
   tags              = local.tags
 }
 
-# Wait until the instance is in 'running' state
-resource "null_resource" "wait_for_instance" {
+locals {
+  dns_records = [
+    {
+      name = var.portfolio_website_domain_name
+      value = aws_eip_association.portfolio_website_eip_association.public_ip
+      type = "A"
+    }, 
+    {
+      name = "www.${var.portfolio_website_domain_name}"
+      value = var.portfolio_website_domain_name
+      type  = "CNAME"
+    }
+  ]
+}
+
+# Set Cloudflare DNS records
+resource "cloudflare_record" "portfolio_website_dns_records" {
+  for_each = {for record in local.dns_records : record.name => record }
+
+  zone_id = var.cloudflare_zone_id
+  name    = each.value.name
+  value   = each.value.value
+  type    = each.value.type
+
+  depends_on = [aws_instance.portfolio_website_instance]
+}
+
+resource "local_file" "portfolio_website_inventory_file" {
+  content = <<EOF
+[aws]
+${aws_eip_association.portfolio_website_eip_association.public_ip} ansible_user=${var.instance_username} ansible_ssh_private_key_file=${local.private_key_path} ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+  EOF
+  filename = "build/inventory.ini"
+}
+
+resource "null_resource" "portfolio_website_ansible_playbook" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
   provisioner "local-exec" {
     command = <<EOT
-      instance_id=${aws_instance.portfolio_website_instance.id}
-      while true; do
-        status=$(aws ec2 describe-instances --instance-id $instance_id --query "Reservations[0].Instances[0].State.Name" --output text)
-        if [ "$status" == "running" ]; then
-          echo "Instance is running."
-          exit 0
-        elif [ "$status" == "shutting-down" ] || [ "$status" == "terminated" ] || [ "$status" == "stopping" ] || [ "$status" == "stopped" ]; then
-          echo "Instance is in an unexpected state: $status"
-          exit 1
-        else
-          echo "Current status: $status. Waiting for instance to be running..."
-          sleep 10
-        fi
-      done
+    sleep 30
+    ansible-playbook -i ${local_file.portfolio_website_inventory_file.filename} playbook.yaml \
+      --extra-vars "git_repo=${var.github_repository} username=${var.instance_username} certificate_path=${var.ssl_certificate_path} ubuntu_version=${var.ubuntu_version_codename}"
     EOT
   }
 
-  depends_on = [aws_instance.portfolio_website_instance]
+  depends_on = [ aws_instance.portfolio_website_instance ]
+}
+
+data "http" "portfolio_website_status" {
+  url = "https://${var.portfolio_website_domain_name}"
 }

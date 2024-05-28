@@ -61,7 +61,7 @@
         repo: "{{ git_repo }}"
         dest: "/home/ubuntu/portfolio-website"
       become: yes
-      become_user: {{ username }}
+      become_user: "{{ username }}"
 
     - name: Copy certificate to remote host
       copy:
