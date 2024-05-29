@@ -3,6 +3,7 @@
 ## Status
 
 ![Website Status](https://img.shields.io/website?url=https%3A%2F%2Fsashwat.in)
+[![Terraform Validate CI](https://github.com/sashuu69/portfolio-website-infrastructure/actions/workflows/terraform-validate.yml/badge.svg)](https://github.com/sashuu69/portfolio-website-infrastructure/actions/workflows/terraform-validate.yml)
 
 ## Introduction
 
