@@ -6,7 +6,7 @@
 
 ## Introduction
 
-The repository contains code to bring up portfolio website. The website is brought up on AWS using Terraform and configured using Ansible.
+The repository contains code to bring up the portfolio website. The website is brought up on AWS using Terraform and configured using Ansible.
 
 The Terraform code brings up VPC, subnet, gateway, route table, security group, floating IP and EC2 instance. After the instance is brought up, ansible brings up the application.
 
