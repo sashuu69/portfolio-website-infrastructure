@@ -20,7 +20,8 @@ ami=""
 instance_type=""
 
 ubuntu_version_codename=""
-github_repository=""
+portfolio_website_git_repository=""
+dc_github_repository=""
 ssl_certificate_path=""
 instance_username=""
 

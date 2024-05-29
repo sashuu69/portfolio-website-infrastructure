@@ -183,7 +183,7 @@ resource "null_resource" "portfolio_website_ansible_playbook" {
     command = <<EOT
     sleep 30
     ansible-playbook -i ${var.inventory_path} playbook.yaml \
-      --extra-vars "git_repo=${var.github_repository} username=${var.instance_username} certificate_path=${var.ssl_certificate_path} ubuntu_version=${var.ubuntu_version_codename}"
+      --extra-vars "portfolio_website_git_repo=${var.portfolio_website_git_repository} portfolio_website_dc_git_repo=${var.dc_github_repository} username=${var.instance_username} certificate_path=${var.ssl_certificate_path} ubuntu_version=${var.ubuntu_version_codename}"
     EOT
   }
 

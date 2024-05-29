@@ -88,8 +88,14 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
-variable "github_repository" {
+variable "portfolio_website_git_repository" {
   description = "The GitHub repository path of portfolio website"
+  type = string
+  default = "https://github.com/sashuu69/portfolio-website"
+}
+
+variable "dc_github_repository" {
+  description = "The GitHub repository path of portfolio website Docker Compose"
   type        = string
   default     = "https://github.com/sashuu69/portfolio-website-docker-compose"
 }

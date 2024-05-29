@@ -56,22 +56,29 @@
         enabled: yes
       become: yes
 
-    - name: Clone the GitHub repository
+    - name: Clone the Portfolio Website Docker Compose GitHub repository
       git:
-        repo: "{{ git_repo }}"
+        repo: "{{ portfolio_website_dc_git_repo }}"
         dest: "/home/ubuntu/portfolio-website"
+      become: yes
+      become_user: "{{ username }}"
+
+    - name: Clone the Portfolio Website GitHub repository
+      git:
+        repo: "{{ portfolio_website_git_repo }}"
+        dest: "/home/ubuntu/portfolio-website/bin/portfolio_webserver"
       become: yes
       become_user: "{{ username }}"
 
     - name: Copy certificate to remote host
       copy:
-        src: "{{ certificate_path }}.crt"
+        src: "{{ certificate_path }}/sashwat.in.crt"
         dest: "/home/ubuntu/portfolio-website/config/ssl"
       become: yes
 
     - name: Copy key to remote host
       copy:
-        src: "{{ certificate_path }}.key"
+        src: "{{ certificate_path }}/sashwat.in.key"
         dest: "/home/ubuntu/portfolio-website/config/ssl"
       become: yes
 
