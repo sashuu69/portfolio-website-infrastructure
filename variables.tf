@@ -107,8 +107,8 @@ variable "instance_username" {
 
 variable "inventory_path" {
   description = "The ansible playbook inventory path"
-  type = string
-  default = "build/inventory.ini"
+  type        = string
+  default     = "build/inventory.ini"
 }
 
 variable "cloudflare_zone_id" {

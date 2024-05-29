@@ -204,5 +204,5 @@ resource "null_resource" "portfolio_website_wait" {
 data "http" "portfolio_website_status" {
   url = "https://${var.portfolio_website_domain_name}"
 
-  depends_on = [ null_resource.portfolio_website_ansible_playbook ]
+  depends_on = [null_resource.portfolio_website_ansible_playbook]
 }
