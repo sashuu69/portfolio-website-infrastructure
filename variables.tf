@@ -105,6 +105,12 @@ variable "instance_username" {
   default     = "ubuntu"
 }
 
+variable "inventory_path" {
+  description = "The ansible playbook inventory path"
+  type = string
+  default = "build/inventory.ini"
+}
+
 variable "cloudflare_zone_id" {
   description = "The cloudflare Zone ID"
   type        = string

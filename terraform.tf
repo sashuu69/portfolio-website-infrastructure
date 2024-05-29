@@ -171,7 +171,7 @@ resource "local_file" "portfolio_website_inventory_file" {
 [aws]
 ${aws_eip_association.portfolio_website_eip_association.public_ip} ansible_user=${var.instance_username} ansible_ssh_private_key_file=${local.private_key_path} ansible_ssh_common_args='-o StrictHostKeyChecking=no'
   EOF
-  filename = "build/inventory.ini"
+  filename = var.inventory_path
 }
 
 # Run ansible playbook
@@ -182,7 +182,7 @@ resource "null_resource" "portfolio_website_ansible_playbook" {
   provisioner "local-exec" {
     command = <<EOT
     sleep 30
-    ansible-playbook -i ${local_file.portfolio_website_inventory_file.filename} playbook.yaml \
+    ansible-playbook -i ${var.inventory_path} playbook.yaml \
       --extra-vars "git_repo=${var.github_repository} username=${var.instance_username} certificate_path=${var.ssl_certificate_path} ubuntu_version=${var.ubuntu_version_codename}"
     EOT
   }
