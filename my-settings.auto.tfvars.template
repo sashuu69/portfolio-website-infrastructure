@@ -1,28 +1,28 @@
-prefix                = ""
-aws_access_key_id     = ""
-aws_secret_access_key = ""
-region                = ""
+prefix=""
+aws_access_key_id=""
+aws_secret_access_key=""
+region=""
 
-cloudflare_mail    = ""
-cloudflare_api_key = ""
+cloudflare_mail=""
+cloudflare_api_key=""
 
-vpc_cidr_block = ""
-subnet_cidr_block = ""
-subnet_cidr_block = ""
-route_table_cidr_block = ""
+vpc_cidr_block=""
+subnet_cidr_block=""
+subnet_cidr_block=""
+route_table_cidr_block=""
 
-public_key_path = ""
+public_key_path=""
 
-ingress_ports = []
-egress_ports = []
+ingress_ports=[]
+egress_ports=[]
 
-ami = ""
-instance_type = ""
+ami=""
+instance_type=""
 
-ubuntu_version_codename = ""
-github_repository = ""
-ssl_certificate_path = "build/sashwat.in"
-instance_username = ""
+ubuntu_version_codename=""
+github_repository=""
+ssl_certificate_path=""
+instance_username=""
 
-cloudflare_zone_id            = ""
-portfolio_website_domain_name = ""
+cloudflare_zone_id=""
+portfolio_website_domain_name=""

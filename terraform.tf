@@ -165,6 +165,7 @@ resource "cloudflare_record" "portfolio_website_dns_records" {
   depends_on = [aws_instance.portfolio_website_instance]
 }
 
+# Create inventory file
 resource "local_file" "portfolio_website_inventory_file" {
   content  = <<EOF
 [aws]
@@ -173,6 +174,7 @@ ${aws_eip_association.portfolio_website_eip_association.public_ip} ansible_user=
   filename = "build/inventory.ini"
 }
 
+# Run ansible playbook
 resource "null_resource" "portfolio_website_ansible_playbook" {
   triggers = {
     always_run = "${timestamp()}"
@@ -185,9 +187,22 @@ resource "null_resource" "portfolio_website_ansible_playbook" {
     EOT
   }
 
-  depends_on = [aws_instance.portfolio_website_instance]
+  depends_on = [
+    aws_instance.portfolio_website_instance,
+    local_file.portfolio_website_inventory_file
+  ]
 }
 
+# Wait for Portfolio Website to come up
+resource "null_resource" "portfolio_website_wait" {
+  provisioner "local-exec" {
+    command = "sleep 30"
+  }
+}
+
+# Check if the application is up
 data "http" "portfolio_website_status" {
   url = "https://${var.portfolio_website_domain_name}"
+
+  depends_on = [ null_resource.portfolio_website_ansible_playbook ]
 }
