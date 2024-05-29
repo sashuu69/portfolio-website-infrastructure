@@ -3,6 +3,7 @@
 ## Status
 
 ![Website Status](https://img.shields.io/website?url=https%3A%2F%2Fsashwat.in)
+[![Terraform Validate CI](https://github.com/sashuu69/portfolio-website-infrastructure/actions/workflows/terraform-validate.yml/badge.svg)](https://github.com/sashuu69/portfolio-website-infrastructure/actions/workflows/terraform-validate.yml)
 
 ## Introduction
 
@@ -13,19 +14,23 @@ The Terraform code brings up VPC, subnet, gateway, route table, security group, 
 ## Instructions
 
 1. Copy contents of `my-settings.auto.tfvars-template` to `my-settings.auto.tfvars`.
+   
     ```bash
     cp my-settings.auto.tfvars-template my-settings.auto.tfvars
     ```
-2. Update my-settings.auto.tfvars to appropriate values.
-3. Initiaze terraform.
+3. Update my-settings.auto.tfvars to appropriate values.
+4. Initiaze terraform.
+   
     ```bash
     terraform init
     ```
-4. Deploy the application.
+6. Deploy the application.
+   
     ```bash
     terraform apply --auto-approve
     ```
-5. (Optional) To bring down the application.
+8. (Optional) To bring down the application.
+   
     ```bash
     terraform destroy --auto-approve
     ```
@@ -36,6 +41,6 @@ The Terraform code brings up VPC, subnet, gateway, route table, security group, 
 
 ## Other Info
 
-If you face any bugs or want to request for a new feature, please create an issue under the repository and provide appropriate labels respectively. If you want to do these by yourself, feel free to raise a PR and I will do the necessary.
+If you face any bugs or want to request a new feature, please create an issue under the repository and provide appropriate labels respectively. If you want to do these by yourself, feel free to raise a PR and I will do what is necessary.
 
 If you want to support me, donations will be helpful.
