@@ -44,3 +44,8 @@ The Terraform code brings up VPC, subnet, gateway, route table, security group, 
 If you face any bugs or want to request a new feature, please create an issue under the repository and provide appropriate labels respectively. If you want to do these by yourself, feel free to raise a PR and I will do what is necessary.
 
 If you want to support me, donations will be helpful.
+
+## Other Repo(s)
+
+1. [sashuu69/portfolio-website](https://github.com/sashuu69/portfolio-website) - The portfolio website flask app
+2. [sashuu69/portfolio-website-docker-compose](https://github.com/sashuu69/portfolio-website-docker-compose) - The docker-compose code to bring up portfolio website
