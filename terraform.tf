@@ -195,8 +195,12 @@ resource "null_resource" "portfolio_website_ansible_playbook" {
 
 # Wait for Portfolio Website to come up
 resource "null_resource" "portfolio_website_wait" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+
   provisioner "local-exec" {
-    command = "sleep 30"
+    command = "sleep 60"
   }
 }
 
