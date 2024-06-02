@@ -13,12 +13,13 @@ The Terraform code brings up VPC, subnet, gateway, route table, security group, 
 
 ## Instructions
 
-1. Copy contents of `my-settings.auto.tfvars-template` to `my-settings.auto.tfvars`.
+1. Make sure terraform and ansible is installed in the host.
+2. Copy contents of `my-settings.auto.tfvars-template` to `my-settings.auto.tfvars`.
    
     ```bash
     cp my-settings.auto.tfvars-template my-settings.auto.tfvars
     ```
-3. Update my-settings.auto.tfvars to appropriate values.
+3. Update `my-settings.auto.tfvars` to appropriate values.
 4. Initiaze terraform.
    
     ```bash
@@ -49,3 +50,4 @@ If you want to support me, donations will be helpful.
 
 1. [sashuu69/portfolio-website](https://github.com/sashuu69/portfolio-website) - The portfolio website flask app
 2. [sashuu69/portfolio-website-docker-compose](https://github.com/sashuu69/portfolio-website-docker-compose) - The docker-compose code to bring up portfolio website
+3. [sashuu69/portfolio-website-infrastructure/](https://github.com/sashuu69/portfolio-website-infrastructure) - The terraform and ansible code to bring portfolio website on AWS
