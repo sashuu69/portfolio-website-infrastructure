@@ -90,8 +90,8 @@ variable "instance_type" {
 
 variable "portfolio_website_git_repository" {
   description = "The GitHub repository path of portfolio website"
-  type = string
-  default = "https://github.com/sashuu69/portfolio-website"
+  type        = string
+  default     = "https://github.com/sashuu69/portfolio-website"
 }
 
 variable "dc_github_repository" {
