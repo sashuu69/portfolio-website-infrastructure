@@ -38,3 +38,6 @@ terraform.rc
 
 # build
 build/
+
+# Python Environment
+portfolio_env
