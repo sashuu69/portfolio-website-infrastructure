@@ -1,95 +1,115 @@
+---
 - name: Install Git and Docker, clone repository, and bring up portfolio website docker compose
   hosts: aws
   tasks:
     - name: Update apt cache
-      apt:
-        update_cache: yes
-      become: yes
+      ansible.builtin.apt:
+        update_cache: true
+      become: true
 
     - name: Install Git
-      apt:
+      ansible.builtin.apt:
         name: git
         state: present
-      become: yes
+      become: true
 
     - name: Install prerequisites for Docker
-      apt:
-        name: 
+      ansible.builtin.apt:
+        name:
           - apt-transport-https
           - ca-certificates
           - curl
           - gnupg-agent
           - software-properties-common
         state: present
-      become: yes
+      become: true
 
     - name: Add Docker's official GPG key
-      apt_key:
+      ansible.builtin.apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
-      become: yes
+      become: true
 
     - name: Set up the stable repository for Docker
-      apt_repository:
+      ansible.builtin.apt_repository:
         repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ubuntu_version }} stable
         state: present
-      become: yes
+      become: true
 
     - name: Install Docker engine
-      apt:
+      ansible.builtin.apt:
         name: docker-ce
         state: present
-        update_cache: yes
-      become: yes
+        update_cache: true
+      become: true
 
     - name: Install Docker Compose
-      get_url:
+      ansible.builtin.get_url:
         url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
         dest: /usr/local/bin/docker-compose
-        mode: '0755'
-      become: yes
+        mode: "0755"
+      become: true
 
     - name: Ensure Docker service is started
-      service:
+      ansible.builtin.service:
         name: docker
         state: started
-        enabled: yes
-      become: yes
+        enabled: true
+      become: true
 
     - name: Clone the Portfolio Website Docker Compose GitHub repository
-      git:
+      ansible.builtin.git:
         repo: "{{ portfolio_website_dc_git_repo }}"
-        dest: "/home/ubuntu/portfolio-website"
-      become: yes
+        dest: /home/ubuntu/portfolio-website
+        version: master
+        force: true
+      register: git_clone
+      changed_when: git_clone.after != git_clone.before
+      become: true
       become_user: "{{ username }}"
 
     - name: Clone the Portfolio Website GitHub repository
-      git:
+      ansible.builtin.git:
         repo: "{{ portfolio_website_git_repo }}"
-        dest: "/home/ubuntu/portfolio-website/bin/portfolio_webserver"
-      become: yes
+        dest: /home/ubuntu/portfolio-website/bin/portfolio_webserver
+        version: main
+        force: true
+      register: git_clone
+      changed_when: git_clone.after != git_clone.before
+      become: true
       become_user: "{{ username }}"
 
     - name: Copy certificate to remote host
-      copy:
+      ansible.builtin.copy:
         src: "{{ certificate_path }}/sashwat.in.crt"
-        dest: "/home/ubuntu/portfolio-website/config/ssl"
-      become: yes
+        dest: /home/ubuntu/portfolio-website/config/ssl
+        mode: "0755"
+      become: true
 
     - name: Copy key to remote host
-      copy:
+      ansible.builtin.copy:
         src: "{{ certificate_path }}/sashwat.in.key"
-        dest: "/home/ubuntu/portfolio-website/config/ssl"
-      become: yes
+        dest: /home/ubuntu/portfolio-website/config/ssl
+        mode: "0755"
+      become: true
 
     - name: Run docker-compose build
-      command: docker-compose build
+      ansible.builtin.command: docker-compose build
       args:
         chdir: /home/ubuntu/portfolio-website
-      become: yes
+      become: true
+      register: build_result
+      changed_when: >
+        build_result.stdout.find("Successfully built") != -1 or
+        build_result.stdout.find("Built") != -1
 
     - name: Run docker-compose up
-      command: docker-compose up -d
+      ansible.builtin.command: docker-compose up -d
       args:
         chdir: /home/ubuntu/portfolio-website
-      become: yes
+      become: true
+      register: up_result
+      changed_when: >
+        up_result.stdout.find('Creating') != -1 or
+        up_result.stdout.find('Recreating') != -1 or
+        up_result.stdout.find('Starting') != -1
