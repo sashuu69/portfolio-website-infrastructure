@@ -81,20 +81,22 @@
 
     - name: Copy certificate to remote host
       ansible.builtin.copy:
-        src: "{{ certificate_path }}/sashwat.in.crt"
+        src: "{{ certificate_path }}/{{ domain_name }}.crt"
         dest: /home/ubuntu/portfolio-website/config/ssl
         mode: "0755"
       become: true
 
     - name: Copy key to remote host
       ansible.builtin.copy:
-        src: "{{ certificate_path }}/sashwat.in.key"
+        src: "{{ certificate_path }}/{{ domain_name }}.key"
         dest: /home/ubuntu/portfolio-website/config/ssl
         mode: "0755"
       become: true
 
     - name: Run docker-compose build
       ansible.builtin.command: docker-compose build
+      environment:
+        DOMAIN_NAME: "{{ domain_name }}"
       args:
         chdir: /home/ubuntu/portfolio-website
       become: true
@@ -105,6 +107,8 @@
 
     - name: Run docker-compose up
       ansible.builtin.command: docker-compose up -d
+      environment:
+        DOMAIN_NAME: "{{ domain_name }}"
       args:
         chdir: /home/ubuntu/portfolio-website
       become: true

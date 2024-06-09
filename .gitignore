@@ -42,3 +42,5 @@ build/
 # Python Environment
 portfolio_env
 env
+
+.DS_Store

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 : "${TF_VAR_prefix?not set}"
-: "${PW_AWS_ACCESS_KEY_ID?not set}"
+: "${TF_VAR_aws_access_key_id?not set}"
 : "${TF_VAR_aws_secret_access_key?not set}"
 : "${TF_VAR_region?not set}"
 : "${TF_VAR_cloudflare_mail?not set}"
@@ -9,7 +9,7 @@
 : "${TF_VAR_vpc_cidr_block?not set}"
 : "${TF_VAR_subnet_cidr_block?not set}"
 : "${TF_VAR_route_table_cidr_block?not set}"
-: "$TF_VAR_public_key_path?not set}"
+: "${TF_VAR_public_key_path?not set}"
 : "${TF_VAR_ingress_ports?not set}"
 : "${TF_VAR_egress_ports?not set}"
 : "${TF_VAR_ami?not set}"
