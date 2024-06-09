@@ -1,5 +1,28 @@
 #!/bin/bash
 
+: "${TF_VAR_prefix?not set}"
+: "${PW_AWS_ACCESS_KEY_ID?not set}"
+: "${TF_VAR_aws_secret_access_key?not set}"
+: "${TF_VAR_region?not set}"
+: "${TF_VAR_cloudflare_mail?not set}"
+: "${TF_VAR_cloudflare_api_key?not set}"
+: "${TF_VAR_vpc_cidr_block?not set}"
+: "${TF_VAR_subnet_cidr_block?not set}"
+: "${TF_VAR_route_table_cidr_block?not set}"
+: "$TF_VAR_public_key_path?not set}"
+: "${TF_VAR_ingress_ports?not set}"
+: "${TF_VAR_egress_ports?not set}"
+: "${TF_VAR_ami?not set}"
+: "${TF_VAR_ubuntu_version_codename?not set}"
+: "${TF_VAR_instance_type?not set}"
+: "${TF_VAR_portfolio_website_git_repository?not set}"
+: "${TF_VAR_dc_github_repository?not set}"
+: "${TF_VAR_ssl_certificate_path?not set}"
+: "${TF_VAR_instance_username?not set}"
+: "${TF_VAR_inventory_path?not set}"
+: "${TF_VAR_cloudflare_zone_id?not set}"
+: "${TF_VAR_portfolio_website_domain_name?not set}"
+
 if [ -z "$1" ]; then
     echo "No argument provided."
     exit 1

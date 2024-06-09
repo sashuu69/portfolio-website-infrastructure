@@ -203,13 +203,3 @@ resource "null_resource" "portfolio_website_wait" {
     command = "sleep 60"
   }
 }
-
-# Check if the application is up
-data "http" "portfolio_website_status" {
-  url = "https://${var.portfolio_website_domain_name}"
-
-  depends_on = [
-    null_resource.portfolio_website_ansible_playbook,
-    null_resource.portfolio_website_wait
-    ]
-}
