@@ -48,8 +48,12 @@ The Terraform code brings up VPC, subnet, gateway, route table, security group, 
     export PW_DOMAIN_NAME="<DOMAIN>"
     sashuu69@Sashwats-MacBook-Pro portfolio-website-infrastructure % 
     ```
-4. Run `./run.sh apply` to bring up the portfolio website.
-5. (Optional) Run `./run.sh destroy` to bring down the portfolio website.
+4. Source the newly created `env` file.
+    ```bash
+    source env
+    ```
+5. Run `./run.sh apply` to bring up the portfolio website.
+6. (Optional) Run `./run.sh destroy` to bring down the portfolio website.
 
 ## Contributors
 
