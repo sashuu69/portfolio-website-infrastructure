@@ -55,7 +55,7 @@ variable "route_table_cidr_block" {
 variable "public_key_path" {
   description = "Public key to add to instance for SSH"
   type        = string
-  default     = "~/.ssh/id_rsa.pub"
+  default     = "build/ssh/id_rsa.pub"
 }
 
 variable "ingress_ports" {
@@ -91,13 +91,11 @@ variable "instance_type" {
 variable "portfolio_website_git_repository" {
   description = "The GitHub repository path of portfolio website"
   type        = string
-  default     = "https://github.com/sashuu69/portfolio-website"
 }
 
 variable "dc_github_repository" {
   description = "The GitHub repository path of portfolio website Docker Compose"
   type        = string
-  default     = "https://github.com/sashuu69/portfolio-website-docker-compose"
 }
 
 variable "ssl_certificate_path" {
